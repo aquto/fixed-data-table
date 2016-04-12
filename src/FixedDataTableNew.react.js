@@ -201,6 +201,11 @@ var FixedDataTable = React.createClass({
     onScrollEnd: PropTypes.func,
 
     /**
+     * Disables scroll on wheel event, allowing parent to scroll over the table
+     */
+    scrollLock: PropTypes.bool,
+
+    /**
      * Callback that is called when `rowHeightGetter` returns a different height
      * for a row than the `rowHeight` prop. This is necessary because initially
      * table estimates heights of some parts of the content.
@@ -967,7 +972,7 @@ var FixedDataTable = React.createClass({
   },
 
   _onWheel(/*number*/ deltaX, /*number*/ deltaY) {
-    if (this.isMounted()) {
+    if (this.isMounted() && !this.props.scrollLock) {
       if (!this._isScrolling) {
         this._didScrollStart();
       }
